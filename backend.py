@@ -13,11 +13,8 @@ def login(driver, username, pw):
     driver.find_element_by_name('username').send_keys(username)
     driver.find_element_by_name('password').send_keys(pw)
     driver.find_element_by_xpath('//button[@type="submit"]').click()
-    sleep(3)
-    driver.find_element_by_xpath('//*[@id="react-root"]/section/main/div/div/div/div/button').click()
-    sleep(3)
-    driver.find_element_by_xpath("//button[contains(text(),'Not Now')]").click()
     sleep(2)
+    driver.get("https://www.instagram.com/{0}/".format(username))
     return "successful"
 
 #returns a list of people who you follow but do not follow you back
@@ -105,7 +102,7 @@ def driver():
 #to logout
 def logout(driver):
     driver.find_element_by_xpath('//*[@id="react-root"]/section/nav/div[2]/div/div/div[3]/div/div[5]').click()
-    driver.find_element_by_xpath('//*[@id="react-root"]/section/nav/div[2]/div/div/div[3]/div/div[5]/div[2]/div[2]/div[2]/div[2]').click()
+    driver.find_element_by_xpath('//*[@id="react-root"]/section/nav/div[2]/div/div/div[3]/div/div[5]/div[2]/div[2]/div[2]/hr').click()
     sleep(2)
 
 #to like a number of posts in the given hashtag
