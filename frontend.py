@@ -8,6 +8,7 @@ driver = driver()
 #Outerwindow
 w = Tk()
 w.geometry("800x620")
+w.resizable(0,0)
 w.title("I n s t a :) B o t")
 bg = PhotoImage(file = "bg.png")
 label1 = Label( w  , image = bg)
@@ -35,6 +36,7 @@ listbox.place(x= 60 , y = 300 )
 def about():
     w2 = Toplevel()
     w2.geometry("400x400")
+    w2.resizable(0, 0)
     w2.title("About...:) ")
     bg = PhotoImage(file="bg.png")
     label1 = Label(w2 , image=bg)
@@ -68,6 +70,7 @@ helpmenu.add_command(label='About' , command = about )
 def win2():
     w2 = Toplevel()
     w2.geometry("400x400")
+    w2.resizable(0, 0)
     w2.title("Direct Message...:) ")
     bg = PhotoImage(file="bg.png")
     label1 = Label(w2 , image=bg)
@@ -85,10 +88,13 @@ def win2():
         message = txt.get("1.0",END)
         if cb1.get() == 1 :
             user = followers(driver, username)
+            txt.insert(END , "  >> Sent:)...  ")
         elif cb2.get() == 1:
             user = following(driver, username)
+            txt.insert(END , "  >> Sent:)...  ")
         elif cb3.get() == 1:
             get_unfollowers(driver, username)
+            txt.insert(END , "  >> Sent:)...  ")
         automate_message(driver, username, message, user)
     button5 = Button(w2, text='Send=>', width=10, activebackground="magenta2", bd=3, bg="plum1", font="Lato" , command = dmsg )
     button5.place(x=250, y=350)
@@ -100,6 +106,7 @@ def win2():
 def win3():
     w2 = Toplevel()
     w2.geometry("400x250")
+    w2.resizable(0, 0)
     w2.title("Like ")
     bg = PhotoImage(file="bg.png")
     label1 = Label(w2 , image=bg)
@@ -110,6 +117,7 @@ def win3():
     def like():
         hashtag = txt.get("1.0", END)
         like_posts(driver, hashtag)
+        txt.insert(END , "  >> Liked:)...  ")
     button5 = Button(w2, text='Like Us', width=10, activebackground="magenta2", bd=3, bg="plum1", font="Lato" , command = like)
     button5.place(x=250, y=200)
     w2.mainloop()
@@ -176,3 +184,4 @@ button6 = Button(w, text='Like Me', width=15 , activebackground = "magenta2" , b
 button6.place(x= 310 , y= 510 )
 
 w.mainloop()
+driver.close()
