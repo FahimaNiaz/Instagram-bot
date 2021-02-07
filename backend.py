@@ -4,6 +4,10 @@ from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.firefox.firefox_binary import FirefoxBinary
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support import ui
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
+
 
 
 #To login to your account
@@ -14,9 +18,8 @@ def login(driver, username, pw):
     driver.find_element_by_name('password').send_keys(pw)
     driver.find_element_by_xpath('//button[@type="submit"]').click()
     sleep(3)
-    driver.find_element_by_xpath("//button[contains(text(),'Not Now')]").click()
+    ui.WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, ".aOOlW.HoLwm"))).click()
     sleep(2)
-    driver.find_element_by_xpath("//button[contains(text(),'Not Now')]").click()
     driver.get("https://www.instagram.com/{0}/".format(username))
     return "successful"
 
@@ -79,7 +82,7 @@ def automate_message(driver, username, message, user):
 #this funtion is to scroll though the list of names and return it as strings
 def get_names(driver, username):
     sleep(3)
-    scroll_box=driver.find_element_by_xpath("/html/body/div[4]/div/div/div[2]") 
+    scroll_box=driver.find_element_by_xpath("//div[@class='isgrP']") 
     last_h,h=0,1
     while last_h!=h:
         last_h=h
@@ -90,7 +93,7 @@ def get_names(driver, username):
             """, scroll_box)
     links=scroll_box.find_elements_by_tag_name('a')
     names=[name.text for name in links if name.text != '']
-    driver.find_element_by_xpath("/html/body/div[4]/div/div/div[1]/div/div[2]/button").click()
+    driver.get("https://www.instagram.com/{0}/".format(username))
     return names
 
 #for the headless driver
@@ -101,12 +104,6 @@ def driver():
     fireFoxOptions.headless= True
     driver= webdriver.Firefox(executable_path="C:/Program Files/geckodriver.exe", options=fireFoxOptions, firefox_binary=firefox_binary)
     return driver#the executable path is where your geckodriver is present
-
-#to logout
-def logout(driver):
-    driver.find_element_by_xpath('//*[@id="react-root"]/section/nav/div[2]/div/div/div[3]/div/div[5]').click()
-    driver.find_element_by_xpath('/html/body/div[4]/div/div/div/div[3]/button[2]').click()
-    sleep(2)
 
 
 #to like a number of posts in the given hashtag
